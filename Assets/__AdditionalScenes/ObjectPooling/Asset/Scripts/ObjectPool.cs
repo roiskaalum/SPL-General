@@ -11,7 +11,7 @@ public class ObjectPool : MonoBehaviour
     private Stack<PooledObject> stack;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         SetupPool();
     }
@@ -25,6 +25,7 @@ public class ObjectPool : MonoBehaviour
         {
             instance = Instantiate(objectToPool);
             instance.Pool = this;
+            instance.transform.SetParent(transform);
             instance.gameObject.SetActive(false);
             stack.Push(instance);
         }
@@ -36,6 +37,8 @@ public class ObjectPool : MonoBehaviour
         {
             PooledObject newInstance = Instantiate(objectToPool);
             newInstance.Pool = this;
+            newInstance.transform.SetParent(transform);
+            newInstance.transform.position = Vector3.zero;
             return newInstance;
         }
         PooledObject nextInstance = stack.Pop();
@@ -47,11 +50,5 @@ public class ObjectPool : MonoBehaviour
     {
         stack.Push(pooledObject);
         pooledObject.gameObject.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

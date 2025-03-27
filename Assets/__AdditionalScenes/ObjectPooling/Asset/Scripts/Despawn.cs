@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class Despawn : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collider)
     {
-        PooledObject pooledObject = collision.gameObject.GetComponent<PooledObject>();
-        if(pooledObject != null)
+        PooledObject pooledObject = collider.gameObject.GetComponent<PooledObject>();
+        Debug.Log(pooledObject);
+        if (pooledObject != null)
         {
+            Debug.Log("Entered");
             pooledObject.Release();
         }
     }
